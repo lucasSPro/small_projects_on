@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import TechIten from './TechIten';
 
 class TechList extends Component {
     state = {
@@ -34,11 +35,12 @@ class TechList extends Component {
             <form onSubmit= {this.handleSubmit}>  
             <ul>
                {this.state.techs.map(tech => (
-                   <li key= {tech} >
-                   {tech}
-                   <button onClick= {() => this.handleDelete(tech)}type="button" >remove</button>
-                   </li>
-               ))}
+                         <TechIten 
+                            key={tech} 
+                            tech={tech} 
+                            onDelete={() => this.handleDelete(tech)}
+                        />
+                   ))}
             </ul>
                 <input type= "text" 
                 onChange={this.handleInputChange}
