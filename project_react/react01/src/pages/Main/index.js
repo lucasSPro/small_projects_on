@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
 import {FaGithubSquare, FaPlus, FaSpinner } from 'react-icons/fa'
+import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
 
@@ -13,25 +14,38 @@ export default class Main extends Component{
         loading: false,
     }
 
+    componentDidMount(){
+        const repositories = localStorage.getItem('repositories');
+        if (repositories) {
+            this.setState({ repositories: JSON.parse(repositories) });
+        }
+    }
+
+    componentDidUpdate(_, prevState){
+        const { repositories } = this.state;
+        if ( prevState.repositories !== repositories ) {
+            localStorage.setItem('repositories', JSON.stringify(repositories));
+        }
+    }
+
     handleInputChange = e => {
         this.setState({ newRepo: e.target.value });
     }
     handleOnSubmit = async e => {
         e.preventDefault();
-
         this.setState({ loading: true });
 
         const { newRepo, repositories } = this.state;
         const response = await api.get(`/repos/${newRepo}`);
 
-        const data = {
-            name: response.data.full_name,
-        }
-        this.setState({
-            repositories: [...repositories, data],
-            newRepo: '',
-            loading: false,
-        })
+            const data = {
+                name: response.data.full_name,
+            }
+            this.setState({
+                repositories: [...repositories, data],
+                newRepo: '',
+                loading: false,
+            })
     }
 
     render(){
@@ -60,7 +74,7 @@ export default class Main extends Component{
                 {repositories.map(repositories => (
                     <li key={repositories.name}>
                         <span>{repositories.name}</span>
-                        <a ref="">Detalhes</a>
+                        <Link to={`/repository/${encodeURIComponent(repositories.name)}`}>Detalhes</Link>
                     </li>
                 ))}
             </List>

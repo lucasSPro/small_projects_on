@@ -84,8 +84,9 @@ export const List = styled.ul`
         justify-content: space-between;
         align-items: center;
     }
+
     & + li {
-        border-top: 2px solid #eee;
+        border-top: 2px solid #265496;
     }
     a {
         color:#265496;
