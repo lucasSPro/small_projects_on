@@ -48,7 +48,7 @@ export const Avatar = styled.Image`
 `;
 export const Name = styled.Text`
     font-size: 14px;
-    color: #eee;
+    color: #444;
     font-weight: bold;
     margin-top: 5px;
     text-align: center;
@@ -70,6 +70,7 @@ export const ProfileButton = styled(RectButton)`
     justify-content: center;
     align-items: center;
     height: 36px;
+    opacity: ${props => (props.loading ? 0.7 : 1)};
 `;
 export const ProfileButtonText = styled.Text`
     font-size: 14px;
